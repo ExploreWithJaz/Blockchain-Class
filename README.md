@@ -29,4 +29,40 @@ Principal Amount after the period: 79,062.5
 
 Monthly Amortization: 1,317.71
 
+PRELIMS
+Scenario: 
+
+Write a solidity program that will input the number of units, rate per unit, and  laboratory fee is fixed amount. Compute for the Enrollment Fee, miscellaneous, mode of payments and Tuition fee.
+
+Mode of Payments:
+
+(1) Cash  10 %  discount of the Tuition Fee
+
+(2) Two Payments  5% interest of the Tuition Fee
+
+(3) Three payments  10% interest of the Tuition Fee
+
+Note: Miscellaneous Fee is 12% of the Enrollment Fee if number of units is greater than 18, otherwise Miscellaneous Fee is 8%.
+
+Sample Output:
+
+=============================================
+
+Number of units: 21
+
+Rate per unit: 620
+
+Enrollment fee: 13020
+
+Miscellaneous Fee: 1562.40
+
+Laboratory Fee: 2000
+
+Tuition Fee: 16582.40
+
+Mode of Payment: 1
+
+Total Payment: 14,924.4
+
+=============================================
  
