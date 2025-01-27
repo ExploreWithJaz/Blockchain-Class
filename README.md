@@ -66,3 +66,17 @@ Total Payment: 14,924.4
 
 =============================================
  
+Write a KECCACK program that would generate the hash using the two methods of the following details:
+Input the following:
+STUDNET NAme: YOUR name
+Firstname: Block ( Last character)
+Lastname: Chain ( First character)
+Code: 2224 (third digit)
+Section: WD401 (last charcater)
+Day: Monday (first character)
+Time 10:00am ( second digit)
+Room: MGN 303 (first Digit)
+
+Output:
+KECCAK: hash
+KECCAK256: hash
