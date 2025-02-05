@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 2</title>
+    <style>
+        body {
+            background-color: cadetblue;
+            font-size: 33px;
+            text-align: center;
+        }
+
+        P {
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <p>Name: Jazper Garcia</p>
+    <p>Section: WD-401</p>
+    <p>Date: Feb 05, 2025</p>
+    <p>Corporate Account Information</p>
+    <p id="accountArea3"></p>
+
+    <script>
+        // Retrieve the corporate account from localStorage
+        const corporateAccount = localStorage.getItem("corporateAccount");
+
+        // Display the corporate account if available
+        if (corporateAccount) {
+            document.getElementById("accountArea3").innerHTML = `Corporate Account: ${corporateAccount}`;
+        } else {
+            document.getElementById("accountArea3").innerHTML = "No corporate account found.";
+        }
+    </script>
+</body>
+</html>

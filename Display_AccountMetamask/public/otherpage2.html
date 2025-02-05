@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Account Page</title>
+    <style>
+        body {
+            background-color: cadetblue;
+            font-size: 33px;
+            text-align: center;
+        }
+
+        P {
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <p>Partner Account Information</p>
+    <p id="accountArea4"></p>
+
+    <script>
+        // Retrieve the partner account from localStorage
+        const partnerAccount = localStorage.getItem("partnerAccount");
+
+        // Display the partner account if available
+        if (partnerAccount) {
+            document.getElementById("accountArea4").innerHTML = `Partner Account: ${partnerAccount}`;
+            alert(`Name: Jazper Garcia\nSection: WD-401\nDate: Feb 5, 2025\nPartner Account: ${partnerAccount}`);
+        } else {
+            document.getElementById("accountArea4").innerHTML = "No partner account found.";
+        }
+    </script>
+</body>
+</html>
