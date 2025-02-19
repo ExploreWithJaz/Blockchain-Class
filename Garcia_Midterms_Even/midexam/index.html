@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garcia Midterm</title>
+</head>
+<body>
+    <main>
+    <h1>XYZ Employees Management System</h1>
+    <form action="/compute" method="POST">
+        <label for="memberID">Member ID</label>
+        <input type="text" id="memberID" name="memberID">
+        <br>
+        <br>
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName"  name="fullName">
+        <br>
+        <br>
+        <select id="gender" name="gender">
+            <option disabled selected hidden>Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <select id="status" name="status">
+            <option disabled selected hidden>Status</option>
+            <option valu="single">Single</option>
+            <option valu="married">Married</option>
+            <option valu="widow">Widow/er</option>
+        </select>
+        <br>
+        <br>
+        <label for="religion">Religion</label>
+        <input type="text" id="religion" name="religion">
+        <label for="citizenship">Citizenship</label>
+        <input type="text" id="citizenship" name="citizenship">
+        <br>
+        <br>
+        <div id="membership">
+            <div  class="mr-10"><p>Type of Membership</span> </div>
+            <input class="mr-3" type="radio" id="new" value="New" name="membership">
+            <label class="mr-5"  for="new">New</label>
+            <br>
+            <input class="mr-3"  type="radio" id="renew" value="Returnee"  name="membership">
+            <label class="mr-5"  for="returnee">Renew</label></div>
+        </div>
+      
+        <br>
+        <label for="year">Year of employment</label>
+        <input type="text" id="year" name="year">
+        <br>
+        <br>
+        <label for="affiliate">Department</label>
+        <input type="text" id="affiliate" name="affiliate">
+        <fieldset>
+            <legend>Interest</legend>
+            <label><input type="checkbox" value="EmergencyLoan" name="interests"/>Emergency Loan</label><br>
+            <label><input type="checkbox" value="RegularLoan" name="interests"/>Regular Loan</label><br>
+            <label><input type="checkbox" value="AdditionalLoan" name="interests"/>Additional Loan</label><br>
+            <label><input type="checkbox" value="OtherLoan" name="interests"/>Other Loan</label><br>
+            <label><input type="checkbox" value="BoardMember" name="interests"/>Board Member</label><br>
+        </fieldset><br>
+        <button type="submit">Submit</button>
+    </form>
+</main>
+    
+</body>
+<style>
+    body, body * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    h1, h2, h3, p, label, fieldset {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(300deg, #48a138, #64ae49, #7dbb5b, #95c86d, #acd680, #c2e394, #d7f1a8, #ecffbd);
+        background-repeat: no-repeat;
+    }
+    main {
+        background: #fefefe;
+        padding: 60px 40px;
+        border-radius: 10px;
+    }
+    h1{
+        margin-bottom: 20px;
+    }
+    fieldset{
+        max-width: fit-content;
+        border-radius: 10px;
+        padding: 10px;
+        border-color: #ecffbd;
+        margin-top: 10px;
+    }
+    button {
+        padding: 10px 20px;
+    }
+    #membership{
+        display: flex;
+    }
+    .mr-5{
+        margin-right: 10px;
+    }
+    .mr-10{
+        margin-right: 20px;
+    }
+    .mr-3{
+        margin-right: 5px;
+    }
+</style>
+</html>
