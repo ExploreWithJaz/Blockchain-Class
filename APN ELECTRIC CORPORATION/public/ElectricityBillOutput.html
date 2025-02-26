@@ -229,7 +229,16 @@
             document.getElementById('accountName').textContent = fullName;
             document.getElementById('address').textContent = data.address || 'N/A';
             document.getElementById('region').textContent = data.region || 'N/A';
-            document.getElementById('classification').textContent = data.classification || 'N/A';
+
+            // Map classification value to option text
+            const classificationMap = {
+                "Residential": "Residential",
+                "Low-Commercial": "Low Voltage Commercial",
+                "High-Commercial": "High Voltage Commercial",
+                "Low-Industrial": "Low Voltage Industrial",
+                "High-Industrial": "High Voltage Industrial"
+            };
+            document.getElementById('classification').textContent = classificationMap[data.classification] || 'N/A';
 
             // Reading Period
             const fromDate = data.readingFrom ? new Date(data.readingFrom).toLocaleDateString() : 'N/A';
