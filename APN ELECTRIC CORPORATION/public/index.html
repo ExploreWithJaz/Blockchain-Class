@@ -114,8 +114,18 @@
             <h2>Billing Results</h2>
             
             <div class="result-item">
+                <span class="result-label">Php/kWh:</span>
+                <span class="result-value" id="rate">₱0.00</span>
+            </div>
+            
+            <div class="result-item">
                 <span class="result-label">Total Energy Consumption (kWh):</span>
-                <span class="result-value highlighted" id="totalConsumption">0.00</span>
+                <span class="result-value" id="totalConsumption">0.00</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Consumption Bill:</span>
+                <span class="result-value highlighted" id="consumptionBill">₱0.00</span>
             </div>
             
             <div class="result-item">
@@ -144,7 +154,7 @@
             </div>
             
             <div class="result-item">
-                <span class="result-label">Consumption Energy Bill:</span>
+                <span class="result-label">Total Bill:</span>
                 <span class="result-value highlighted" id="totalBill">₱0.00</span>
             </div>
         </div>
@@ -153,7 +163,7 @@
             <p>APN Electric Corporation &copy; 2025. All rights reserved.</p>
         </footer>
     </div>
-    
+
     <script>
         function submitForm() {
             const formData = {
@@ -162,7 +172,6 @@
                 classification: document.getElementById('classification').value,
                 region: document.getElementById('region').value
             };
-
             fetch('/calculate', {
                 method: 'POST',
                 headers: {
@@ -172,7 +181,9 @@
             })
             .then(response => response.json())
             .then(data => {
+                document.getElementById('rate').textContent = `₱${data.rate.toFixed(2)}`;
                 document.getElementById('totalConsumption').textContent = data.totalConsumption.toFixed(2);
+                document.getElementById('consumptionBill').textContent = `₱${data.consumptionBill.toFixed(2)}`;
                 document.getElementById('generationCharge').textContent = `₱${data.generationCharge.toFixed(2)}`;
                 document.getElementById('transmissionCharge').textContent = `₱${data.transmissionCharge.toFixed(2)}`;
                 document.getElementById('distributionCharge').textContent = `₱${data.distributionCharge.toFixed(2)}`;
