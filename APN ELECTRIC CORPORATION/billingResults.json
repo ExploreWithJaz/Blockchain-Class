@@ -1,0 +1,18 @@
+{
+  "accountNumber": "1",
+  "lastName": "a",
+  "firstName": "b",
+  "middleName": "c",
+  "address": "d",
+  "region": "NCR",
+  "classification": "Residential",
+  "totalConsumption": 74.15999999999997,
+  "rate": 10.26,
+  "consumptionBill": 760.8815999999997,
+  "generationCharge": 418.48487999999986,
+  "transmissionCharge": 76.84904159999998,
+  "distributionCharge": 133.15427999999994,
+  "taxes": 89.02314719999997,
+  "otherTaxes": 43.370251199999984,
+  "totalBill": 1521.7631999999996
+}

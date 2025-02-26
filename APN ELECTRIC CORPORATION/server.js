@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
@@ -12,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/calculate', (req, res) => {
-    const { previousConsumption, presentConsumption, classification, region } = req.body;
+    const { accountNumber, lastName, firstName, middleName, address, region, classification, previousConsumption, presentConsumption } = req.body;
 
     const totalConsumption = parseFloat(presentConsumption) - parseFloat(previousConsumption);
 
@@ -35,7 +36,14 @@ app.post('/calculate', (req, res) => {
 
     const totalBill = consumptionBill + generationCharge + transmissionCharge + distributionCharge + taxes + otherTaxes;
 
-    res.json({
+    const resultData = {
+        accountNumber,
+        lastName,
+        firstName,
+        middleName,
+        address,
+        region,
+        classification,
         totalConsumption,
         rate,
         consumptionBill,
@@ -45,6 +53,15 @@ app.post('/calculate', (req, res) => {
         taxes,
         otherTaxes,
         totalBill
+    };
+
+    fs.writeFile('billingResults.json', JSON.stringify(resultData, null, 2), (err) => {
+        if (err) {
+            console.error('Error writing to file', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.json(resultData);
     });
 });
 

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APN Electric Corporation - Billing Results</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .print-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .print-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .back-btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .bill-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            .print-section {
+                display: none;
+            }
+        }
+
+        .account-details {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .detail-row {
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 200px;
+        }
+
+        .detail-value {
+            display: inline-block;
+        }
+
+        .billing-date {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">APN Electric</div>
+        </div>
+
+        <div class="bill-header">
+            <h1>Electricity Bill Statement</h1>
+            <div class="billing-date">
+                <p>Date: <span id="currentDate"></span></p>
+            </div>
+        </div>
+
+        <div class="account-details">
+            <div class="detail-row">
+                <span class="detail-label">Account Number:</span>
+                <span class="detail-value" id="accountNumber"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Account Name:</span>
+                <span class="detail-value" id="accountName"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Address:</span>
+                <span class="detail-value" id="address"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Customer Region:</span>
+                <span class="detail-value" id="region"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Customer Classification:</span>
+                <span class="detail-value" id="classification"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Reading Period:</span>
+                <span class="detail-value" id="readingPeriod"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Previous Reading:</span>
+                <span class="detail-value" id="previousConsumption"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Current Reading:</span>
+                <span class="detail-value" id="presentConsumption"></span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">This Month's Usage:</span>
+                <span class="detail-value" id="monthUsage"></span>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>Billing Results</h2>
+
+            <div class="result-item">
+                <span class="result-label">Php/kWh:</span>
+                <span class="result-value" id="rate">₱0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Total Energy Consumption (kWh):</span>
+                <span class="result-value" id="totalConsumption">0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Consumption Bill:</span>
+                <span class="result-value highlighted" id="consumptionBill">₱0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Generation Charge (55%):</span>
+                <span class="result-value" id="generationCharge">₱0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Transmission Charge (10.1%):</span>
+                <span class="result-value" id="transmissionCharge">₱0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Distribution Charge (17.5%):</span>
+                <span class="result-value" id="distributionCharge">₱0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Taxes (11.7%):</span>
+                <span class="result-value" id="taxes">₱0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Other Taxes (5.7%):</span>
+                <span class="result-value" id="otherTaxes">₱0.00</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Total Bill:</span>
+                <span class="result-value highlighted" id="totalBill">₱0.00</span>
+            </div>
+        </div>
+
+        <div class="print-section">
+            <button class="back-btn" onclick="window.location.href='/'">Back to Calculator</button>
+            <button class="print-btn" onclick="window.print()">Print Bill</button>
+        </div>
+
+        <footer>
+            <p>APN Electric Corporation &copy; 2025. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get data from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const data = JSON.parse(urlParams.get('data'));
+
+            // Set current date
+            const currentDate = new Date();
+            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString();
+
+            // Set account information
+            document.getElementById('accountNumber').textContent = data.accountNumber || 'N/A';
+
+            // Format full name (Last, First Middle)
+            const lastName = data.lastName || '';
+            const firstName = data.firstName || '';
+            const middleName = data.middleName || '';
+            let fullName = lastName;
+
+            if (firstName) {
+                fullName += ', ' + firstName;
+            }
+
+            if (middleName) {
+                fullName += ' ' + middleName;
+            }
+
+            document.getElementById('accountName').textContent = fullName;
+            document.getElementById('address').textContent = data.address || 'N/A';
+            document.getElementById('region').textContent = data.region || 'N/A';
+            document.getElementById('classification').textContent = data.classification || 'N/A';
+
+            // Reading Period
+            const fromDate = data.readingFrom ? new Date(data.readingFrom).toLocaleDateString() : 'N/A';
+            const toDate = data.readingTo ? new Date(data.readingTo).toLocaleDateString() : 'N/A';
+            document.getElementById('readingPeriod').textContent = fromDate + ' to ' + toDate;
+
+            // Reading Information
+            document.getElementById('previousConsumption').textContent = parseFloat(data.previousConsumption).toFixed(2) + ' kWh';
+            document.getElementById('presentConsumption').textContent = parseFloat(data.presentConsumption).toFixed(2) + ' kWh';
+            document.getElementById('monthUsage').textContent = data.totalConsumption.toFixed(2) + ' kWh';
+
+            // Set billing results
+            document.getElementById('rate').textContent = '₱' + data.rate.toFixed(2);
+            document.getElementById('totalConsumption').textContent = data.totalConsumption.toFixed(2);
+            document.getElementById('consumptionBill').textContent = '₱' + data.consumptionBill.toFixed(2);
+            document.getElementById('generationCharge').textContent = '₱' + data.generationCharge.toFixed(2);
+            document.getElementById('transmissionCharge').textContent = '₱' + data.transmissionCharge.toFixed(2);
+            document.getElementById('distributionCharge').textContent = '₱' + data.distributionCharge.toFixed(2);
+            document.getElementById('taxes').textContent = '₱' + data.taxes.toFixed(2);
+            document.getElementById('otherTaxes').textContent = '₱' + data.otherTaxes.toFixed(2);
+            document.getElementById('totalBill').textContent = '₱' + data.totalBill.toFixed(2);
+        });
+    </script>
+</body>
+
+</html>

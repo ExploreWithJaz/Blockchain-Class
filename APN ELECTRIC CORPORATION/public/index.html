@@ -164,14 +164,31 @@
         </footer>
     </div>
 
+    // Replace the existing script section in index.html with this:
     <script>
         function submitForm() {
+            // Validate form
+            const form = document.getElementById('energyForm');
+            if (!form.checkValidity()) {
+                alert('Please fill out all required fields.');
+                return false;
+            }
+            
+            // Collect all form data
             const formData = {
-                previousConsumption: document.getElementById('previousConsumption').value,
-                presentConsumption: document.getElementById('presentConsumption').value,
+                accountNumber: document.getElementById('accountNumber').value,
+                lastName: document.getElementById('lastName').value,
+                firstName: document.getElementById('firstName').value,
+                middleName: document.getElementById('middleName').value,
+                address: document.getElementById('address').value,
+                region: document.getElementById('region').value,
                 classification: document.getElementById('classification').value,
-                region: document.getElementById('region').value
+                readingFrom: document.getElementById('readingFrom').value,
+                readingTo: document.getElementById('readingTo').value,
+                previousConsumption: document.getElementById('previousConsumption').value,
+                presentConsumption: document.getElementById('presentConsumption').value
             };
+    
             fetch('/calculate', {
                 method: 'POST',
                 headers: {
@@ -181,20 +198,15 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('rate').textContent = `₱${data.rate.toFixed(2)}`;
-                document.getElementById('totalConsumption').textContent = data.totalConsumption.toFixed(2);
-                document.getElementById('consumptionBill').textContent = `₱${data.consumptionBill.toFixed(2)}`;
-                document.getElementById('generationCharge').textContent = `₱${data.generationCharge.toFixed(2)}`;
-                document.getElementById('transmissionCharge').textContent = `₱${data.transmissionCharge.toFixed(2)}`;
-                document.getElementById('distributionCharge').textContent = `₱${data.distributionCharge.toFixed(2)}`;
-                document.getElementById('taxes').textContent = `₱${data.taxes.toFixed(2)}`;
-                document.getElementById('otherTaxes').textContent = `₱${data.otherTaxes.toFixed(2)}`;
-                document.getElementById('totalBill').textContent = `₱${data.totalBill.toFixed(2)}`;
-                
-                document.getElementById('results').style.display = 'block';
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+                // Pass the calculation results via URL parameters
+                const urlParams = new URLSearchParams();
+                urlParams.set('data', JSON.stringify(data));
+                window.location.href = `ElectricityBillOutput.html?${urlParams.toString()}`;
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during calculation. Please try again.');
+            });
         }
     </script>
 </body>
