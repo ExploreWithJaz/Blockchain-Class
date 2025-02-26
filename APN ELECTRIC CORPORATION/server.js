@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/calculate', (req, res) => {
-    const { accountNumber, lastName, firstName, middleName, address, region, classification, previousConsumption, presentConsumption } = req.body;
+    const { accountNumber, lastName, firstName, middleName, address, region, classification, readingFrom, readingTo, previousConsumption, presentConsumption } = req.body;
 
     const totalConsumption = parseFloat(presentConsumption) - parseFloat(previousConsumption);
 
@@ -44,6 +44,10 @@ app.post('/calculate', (req, res) => {
         address,
         region,
         classification,
+        readingFrom,
+        readingTo,
+        previousConsumption,
+        presentConsumption,
         totalConsumption,
         rate,
         consumptionBill,
