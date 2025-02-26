@@ -58,7 +58,7 @@
                                 <option value="Luzon">Luzon</option>
                                 <option value="Visayas">Visayas</option>
                                 <option value="Mindanao">Mindanao</option>
-                                <option value="Other">Other Regions</option>
+                                <option value="Other regions">Other regions</option>
                             </select>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                 </div>
             </div>
             
-            <button type="button" class="btn" onclick="calculateBill()">Calculate Energy Bill</button>
+            <button type="button" class="btn" onclick="submitForm()">Calculate Energy Bill</button>
         </form>
         
         <div class="results" id="results" style="display: none;">
@@ -155,45 +155,35 @@
     </div>
     
     <script>
-        function calculateBill() {
-            // Get input values
-            const previousConsumption = parseFloat(document.getElementById('previousConsumption').value) || 0;
-            const presentConsumption = parseFloat(document.getElementById('presentConsumption').value) || 0;
-            
-            // Validate that present is greater than or equal to previous
-            if (presentConsumption < previousConsumption) {
-                alert('Present consumption cannot be less than previous consumption.');
-                return;
-            }
-            
-            // Calculate total consumption
-            const totalConsumption = presentConsumption - previousConsumption;
-            
-            // Assuming a rate of ₱10 per kWh (you can change this)
-            const ratePerKwh = 10;
-            const consumptionBill = totalConsumption * ratePerKwh;
-            
-            // Calculate charges
-            const generationCharge = consumptionBill * 0.55;
-            const transmissionCharge = consumptionBill * 0.101;
-            const distributionCharge = consumptionBill * 0.175;
-            const taxes = consumptionBill * 0.117;
-            const otherTaxes = consumptionBill * 0.057;
-            
-            // Update results
-            document.getElementById('totalConsumption').textContent = totalConsumption.toFixed(2);
-            document.getElementById('generationCharge').textContent = `₱${generationCharge.toFixed(2)}`;
-            document.getElementById('transmissionCharge').textContent = `₱${transmissionCharge.toFixed(2)}`;
-            document.getElementById('distributionCharge').textContent = `₱${distributionCharge.toFixed(2)}`;
-            document.getElementById('taxes').textContent = `₱${taxes.toFixed(2)}`;
-            document.getElementById('otherTaxes').textContent = `₱${otherTaxes.toFixed(2)}`;
-            document.getElementById('totalBill').textContent = `₱${consumptionBill.toFixed(2)}`;
-            
-            // Show results
-            document.getElementById('results').style.display = 'block';
-            
-            // Scroll to results
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        function submitForm() {
+            const formData = {
+                previousConsumption: document.getElementById('previousConsumption').value,
+                presentConsumption: document.getElementById('presentConsumption').value,
+                classification: document.getElementById('classification').value,
+                region: document.getElementById('region').value
+            };
+
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalConsumption').textContent = data.totalConsumption.toFixed(2);
+                document.getElementById('generationCharge').textContent = `₱${data.generationCharge.toFixed(2)}`;
+                document.getElementById('transmissionCharge').textContent = `₱${data.transmissionCharge.toFixed(2)}`;
+                document.getElementById('distributionCharge').textContent = `₱${data.distributionCharge.toFixed(2)}`;
+                document.getElementById('taxes').textContent = `₱${data.taxes.toFixed(2)}`;
+                document.getElementById('otherTaxes').textContent = `₱${data.otherTaxes.toFixed(2)}`;
+                document.getElementById('totalBill').textContent = `₱${data.totalBill.toFixed(2)}`;
+                
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            })
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
