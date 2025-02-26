@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APN Electric Corporation - Energy Consumption Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">APN Electric</div>
+        </div>
+        
+        <h1>Energy Consumption Calculator</h1>
+        
+        <form id="energyForm">
+            <div class="section">
+                <div class="section-title">Account Information</div>
+                
+                <div class="form-group">
+                    <label for="accountNumber">Account Number:</label>
+                    <input type="text" id="accountNumber" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="middleName">Middle Name:</label>
+                            <input type="text" id="middleName">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" required>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="region">Consumer Region:</label>
+                            <select id="region" required>
+                                <option value="">Select One</option>
+                                <option value="North">North Region</option>
+                                <option value="South">South Region</option>
+                                <option value="East">East Region</option>
+                                <option value="West">West Region</option>
+                                <option value="Central">Central Region</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="classification">Consumer Classification:</label>
+                            <select id="classification" required>
+                                <option value="">Select One</option>
+                                <option value="Residential">Residential</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Industrial">Industrial</option>
+                                <option value="Government">Government</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Reading Information</div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="readingFrom">Reading Period From:</label>
+                            <input type="date" id="readingFrom" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="readingTo">Reading Period To:</label>
+                            <input type="date" id="readingTo" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="previousConsumption">Previous Energy Consumption (kWh):</label>
+                    <input type="number" id="previousConsumption" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="presentConsumption">Present Energy Consumption (kWh):</label>
+                    <input type="number" id="presentConsumption" min="0" step="0.01" required>
+                </div>
+            </div>
+            
+            <button type="button" class="btn" onclick="calculateBill()">Calculate Energy Bill</button>
+        </form>
+        
+        <div class="results" id="results" style="display: none;">
+            <h2>Billing Results</h2>
+            
+            <div class="result-item">
+                <span class="result-label">Total Energy Consumption (kWh):</span>
+                <span class="result-value highlighted" id="totalConsumption">0.00</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Generation Charge (55%):</span>
+                <span class="result-value" id="generationCharge">₱0.00</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Transmission Charge (10.1%):</span>
+                <span class="result-value" id="transmissionCharge">₱0.00</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Distribution Charge (17.5%):</span>
+                <span class="result-value" id="distributionCharge">₱0.00</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Taxes (11.7%):</span>
+                <span class="result-value" id="taxes">₱0.00</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Other Taxes (5.7%):</span>
+                <span class="result-value" id="otherTaxes">₱0.00</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Consumption Energy Bill:</span>
+                <span class="result-value highlighted" id="totalBill">₱0.00</span>
+            </div>
+        </div>
+        
+        <footer>
+            <p>APN Electric Corporation &copy; 2025. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        function calculateBill() {
+            // Get input values
+            const previousConsumption = parseFloat(document.getElementById('previousConsumption').value) || 0;
+            const presentConsumption = parseFloat(document.getElementById('presentConsumption').value) || 0;
+            
+            // Validate that present is greater than or equal to previous
+            if (presentConsumption < previousConsumption) {
+                alert('Present consumption cannot be less than previous consumption.');
+                return;
+            }
+            
+            // Calculate total consumption
+            const totalConsumption = presentConsumption - previousConsumption;
+            
+            // Assuming a rate of ₱10 per kWh (you can change this)
+            const ratePerKwh = 10;
+            const consumptionBill = totalConsumption * ratePerKwh;
+            
+            // Calculate charges
+            const generationCharge = consumptionBill * 0.55;
+            const transmissionCharge = consumptionBill * 0.101;
+            const distributionCharge = consumptionBill * 0.175;
+            const taxes = consumptionBill * 0.117;
+            const otherTaxes = consumptionBill * 0.057;
+            
+            // Update results
+            document.getElementById('totalConsumption').textContent = totalConsumption.toFixed(2);
+            document.getElementById('generationCharge').textContent = `₱${generationCharge.toFixed(2)}`;
+            document.getElementById('transmissionCharge').textContent = `₱${transmissionCharge.toFixed(2)}`;
+            document.getElementById('distributionCharge').textContent = `₱${distributionCharge.toFixed(2)}`;
+            document.getElementById('taxes').textContent = `₱${taxes.toFixed(2)}`;
+            document.getElementById('otherTaxes').textContent = `₱${otherTaxes.toFixed(2)}`;
+            document.getElementById('totalBill').textContent = `₱${consumptionBill.toFixed(2)}`;
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
